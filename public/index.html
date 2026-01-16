@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SwiftSend | نقل ملفات احترافي</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&family=Tajawal:wght@500;800&display=swap" rel="stylesheet">
+    <title>SwiftSend | نقل ملفات وفيديوهات احترافي</title>
+    <!-- خطوط جوجل وأيقونات -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
             --primary: #6366f1;
-            --primary-hover: #4f46e5;
+            --primary-dark: #4f46e5;
+            --success: #10b981;
             --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --glass: rgba(255, 255, 255, 0.95);
         }
 
         body {
@@ -27,44 +28,36 @@
         }
 
         .app-container {
-            background: var(--glass);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
-            width: 100%;
-            max-width: 480px;
+            width: 95%;
+            max-width: 500px;
             border-radius: 24px;
-            padding: 40px;
+            padding: 30px;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            position: relative;
-            overflow: hidden;
+            text-align: center;
         }
 
-        .app-container::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 5px;
-            background: var(--primary);
-        }
+        header h1 { color: var(--primary); margin: 0; font-size: 32px; font-weight: 900; }
+        header p { color: #6b7280; margin-top: 5px; font-size: 14px; }
 
-        header { margin-bottom: 30px; text-align: center; }
-        header h1 { font-size: 32px; font-weight: 800; color: var(--primary); margin: 0; }
-        header p { color: #6b7280; font-size: 15px; margin-top: 8px; }
-
+        /* التبويبات */
         .tabs {
             display: flex;
             background: #f3f4f6;
             padding: 5px;
             border-radius: 12px;
-            margin-bottom: 25px;
+            margin: 25px 0;
         }
 
         .tab-btn {
             flex: 1;
-            padding: 10px;
+            padding: 12px;
             border: none;
             background: none;
             cursor: pointer;
             font-family: inherit;
-            font-weight: 600;
+            font-weight: 700;
             border-radius: 8px;
             transition: 0.3s;
         }
@@ -72,104 +65,79 @@
         .tab-btn.active {
             background: white;
             color: var(--primary);
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
 
-        /* منطقة السحب والإفلات */
+        /* منطقة الرفع */
         .upload-area {
             border: 2px dashed #d1d5db;
             border-radius: 16px;
             padding: 40px 20px;
-            text-align: center;
-            transition: 0.3s;
-            cursor: pointer;
             margin-bottom: 20px;
+            cursor: pointer;
+            transition: 0.3s;
         }
 
-        .upload-area:hover, .upload-area.dragover {
-            border-color: var(--primary);
-            background: rgba(99, 102, 241, 0.05);
-        }
+        .upload-area:hover { border-color: var(--primary); background: rgba(99, 102, 241, 0.05); }
+        .upload-area i { font-size: 50px; color: #9ca3af; margin-bottom: 10px; }
 
-        .upload-area i { font-size: 48px; color: #9ca3af; margin-bottom: 15px; }
-
+        /* الأكواد والمدخلات */
         .code-box {
             background: #f9fafb;
             border-radius: 12px;
             padding: 20px;
-            margin: 20px 0;
+            margin-bottom: 20px;
             display: none;
             border: 1px solid #e5e7eb;
         }
 
-        .code-text {
-            font-size: 38px;
-            font-weight: 800;
-            letter-spacing: 8px;
-            color: var(--primary);
-            margin: 10px 0;
-        }
+        .code-text { font-size: 36px; font-weight: 900; letter-spacing: 8px; color: var(--primary); }
 
-        .input-group { position: relative; margin: 20px 0; }
         .input-group input {
             width: 100%;
             padding: 15px;
             border: 2px solid #e5e7eb;
             border-radius: 12px;
-            font-size: 18px;
+            font-size: 20px;
             text-align: center;
+            margin-bottom: 20px;
             box-sizing: border-box;
-            transition: 0.3s;
         }
 
-        .input-group input:focus {
-            border-color: var(--primary);
-            outline: none;
-            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
-        }
-
-        .btn-primary {
+        .btn {
             background: var(--primary);
             color: white;
             border: none;
-            padding: 16px;
+            padding: 15px;
             border-radius: 12px;
             width: 100%;
             font-size: 16px;
             font-weight: 700;
             cursor: pointer;
-            transition: 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
         }
 
-        .btn-primary:hover { background: var(--primary-hover); transform: translateY(-1px); }
+        .btn:disabled { background: #ccc; cursor: not-allowed; }
 
         /* شريط التقدم */
         .progress-bar {
-            height: 6px;
-            background: #e5e7eb;
+            height: 8px;
+            background: #eee;
             border-radius: 10px;
-            margin-top: 20px;
+            margin: 20px 0;
             display: none;
             overflow: hidden;
         }
-        .progress-inner {
-            height: 100%;
-            background: var(--primary);
-            width: 0%;
-            transition: 0.3s;
-        }
+        .progress-inner { height: 100%; background: var(--success); width: 0%; transition: 0.2s; }
 
-        #status { font-size: 14px; margin-top: 15px; color: #4b5563; }
+        #status { font-size: 14px; margin-top: 10px; color: #4b5563; }
 
-        .hidden { display: none; }
-        
         .download-card {
             background: #ecfdf5;
-            border: 1px solid #10b981;
+            border: 1px solid var(--success);
             padding: 15px;
             border-radius: 12px;
             margin-top: 20px;
@@ -177,53 +145,55 @@
             align-items: center;
             justify-content: space-between;
         }
+
+        .hidden { display: none; }
     </style>
 </head>
 <body>
 
 <div class="app-container">
     <header>
-        <h1>SwiftSend</h1>
-        <p>بساطة متناهية في نقل الملفات</p>
+        <h1>SwiftSend 🚀</h1>
+        <p>نقل الصور، الملفات، والفيديوهات بلمحة بصر</p>
     </header>
 
     <div class="tabs">
-        <button class="tab-btn active" onclick="showTab('send')">إرسال</button>
-        <button class="tab-btn" onclick="showTab('receive')">استقبال</button>
+        <button class="tab-btn active" id="tab-send" onclick="switchTab('send')">إرسال</button>
+        <button class="tab-btn" id="tab-receive" onclick="switchTab('receive')">استقبال</button>
     </div>
 
-    <!-- واجهة الإرسال -->
-    <div id="send-tab">
-        <div class="upload-area" id="drop-zone" onclick="document.getElementById('fileInput').click()">
-            <i class="fas fa-cloud-arrow-up"></i>
-            <p id="file-label">اسحب الملف هنا أو اضغط للاختيار</p>
-            <input type="file" id="fileInput" class="hidden" onchange="updateFileLabel()">
+    <!-- قسم الإرسال -->
+    <div id="section-send">
+        <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+            <i class="fas fa-file-video" id="icon-type"></i>
+            <p id="file-info">اسحب الملف هنا أو اضغط للاختيار</p>
+            <input type="file" id="fileInput" class="hidden" onchange="handleFileSelect()">
         </div>
 
-        <div id="code-area" class="code-box">
-            <span>كود الربط الخاص بك:</span>
-            <div id="displayCode" class="code-text">000000</div>
-            <small style="color: #6b7280;">أدخل هذا الكود في الجهاز الآخر</small>
+        <div id="code-display-area" class="code-box">
+            <p>كود الربط:</p>
+            <div id="code-number" class="code-text">000000</div>
+            <p style="font-size: 12px; color: #777;">أدخل الكود في الجهاز الآخر للاتصال</p>
         </div>
 
-        <button class="btn-primary" id="action-btn" onclick="startProcess()">
+        <button class="btn" id="main-btn" onclick="handleMainAction()">
             <i class="fas fa-magic"></i>
-            <span id="btn-text">بدء عملية الإرسال</span>
+            <span id="btn-text">إنشاء كود إرسال</span>
         </button>
     </div>
 
-    <!-- واجهة الاستقبال -->
-    <div id="receive-tab" class="hidden">
+    <!-- قسم الاستقبال -->
+    <div id="section-receive" class="hidden">
         <div class="input-group">
-            <input type="text" id="inputCode" placeholder="0 0 0 0 0 0" maxlength="6">
+            <input type="text" id="inputCode" placeholder="أدخل كود الـ 6 أرقام" maxlength="6">
         </div>
-        <button class="btn-primary" onclick="joinCode()">
+        <button class="btn" onclick="joinByCode()" style="background: #374151;">
             <i class="fas fa-link"></i>
-            اتصال واستلام
+            اتصال وتحميل
         </button>
     </div>
 
-    <div class="progress-bar" id="progress-container"><div class="progress-inner" id="progress-fill"></div></div>
+    <div class="progress-bar" id="progress-bar"><div class="progress-inner" id="progress-fill"></div></div>
     <p id="status"></p>
     <div id="download-area"></div>
 </div>
@@ -231,28 +201,28 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
     const socket = io();
-    let currentCode = "";
+    let myCode = "";
     let isConnected = false;
 
-    function showTab(type) {
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        event.target.classList.add('active');
-        if(type === 'send') {
-            document.getElementById('send-tab').classList.remove('hidden');
-            document.getElementById('receive-tab').classList.add('hidden');
-        } else {
-            document.getElementById('send-tab').classList.add('hidden');
-            document.getElementById('receive-tab').classList.remove('hidden');
+    function switchTab(type) {
+        document.getElementById('section-send').classList.toggle('hidden', type !== 'send');
+        document.getElementById('section-receive').classList.toggle('hidden', type !== 'receive');
+        document.getElementById('tab-send').classList.toggle('active', type === 'send');
+        document.getElementById('tab-receive').classList.toggle('active', type === 'receive');
+    }
+
+    function handleFileSelect() {
+        const file = document.getElementById('fileInput').files[0];
+        if (file) {
+            document.getElementById('file-info').innerText = `تم اختيار: ${file.name} (${(file.size/1024/1024).toFixed(2)} MB)`;
+            if (file.type.includes('video')) document.getElementById('icon-type').className = 'fas fa-video';
+            else if (file.type.includes('image')) document.getElementById('icon-type').className = 'fas fa-image';
+            else document.getElementById('icon-type').className = 'fas fa-file-alt';
         }
     }
 
-    function updateFileLabel() {
-        const file = document.getElementById('fileInput').files[0];
-        if(file) document.getElementById('file-label').innerText = file.name;
-    }
-
-    function startProcess() {
-        if(!isConnected) {
+    function handleMainAction() {
+        if (!isConnected) {
             socket.emit('create-code');
         } else {
             uploadFile();
@@ -260,71 +230,75 @@
     }
 
     socket.on('code-generated', (code) => {
-        currentCode = code;
-        document.getElementById('displayCode').innerText = code;
-        document.getElementById('code-area').style.display = "block";
-        document.getElementById('status').innerText = "في انتظار اتصال الطرف الآخر...";
+        myCode = code;
+        document.getElementById('code-number').innerText = code;
+        document.getElementById('code-display-area').style.display = "block";
+        document.getElementById('status').innerText = "في انتظار الطرف الآخر...";
     });
 
     socket.on('peer-connected', () => {
         isConnected = true;
-        document.getElementById('status').innerText = "تم الربط! اختر ملفك واضغط إرسال.";
+        document.getElementById('status').innerText = "تم الاتصال! يمكنك الإرسال الآن.";
         document.getElementById('btn-text').innerText = "إرسال الملف الآن";
+        document.getElementById('main-btn').style.background = "#10b981";
     });
 
     function uploadFile() {
         const file = document.getElementById('fileInput').files[0];
-        if(!file) return alert("اختر ملفاً أولاً");
+        if (!file) return alert("الرجاء اختيار ملف أولاً");
 
-        document.getElementById('progress-container').style.display = "block";
-        let progress = 0;
-        const interval = setInterval(() => {
-            progress += 10;
-            document.getElementById('progress-fill').style.width = progress + "%";
-            if(progress >= 100) clearInterval(interval);
-        }, 100);
+        document.getElementById('progress-bar').style.display = "block";
+        document.getElementById('main-btn').disabled = true;
+        document.getElementById('status').innerText = "جاري تحضير الملف... قد يستغرق الفيديوهات وقتاً أطول.";
 
         const reader = new FileReader();
+        
+        reader.onprogress = (event) => {
+            if (event.lengthComputable) {
+                const percent = (event.loaded / event.total) * 100;
+                document.getElementById('progress-fill').style.width = percent + "%";
+            }
+        };
+
         reader.onload = (e) => {
             socket.emit('send-file', {
-                code: currentCode,
+                code: myCode,
                 fileData: e.target.result,
-                fileName: file.name
+                fileName: file.name,
+                fileType: file.type
             });
             document.getElementById('status').innerText = "تم الإرسال بنجاح! ✅";
+            document.getElementById('main-btn').disabled = false;
         };
+
         reader.readAsArrayBuffer(file);
     }
 
-    function joinCode() {
+    function joinByCode() {
         const code = document.getElementById('inputCode').value;
-        currentCode = code;
+        if (code.length < 6) return alert("الكود غير مكتمل");
+        myCode = code;
         socket.emit('join-by-code', code);
+        document.getElementById('status').innerText = "جاري محاولة الاتصال...";
     }
 
     socket.on('receive-file', (data) => {
-        const blob = new Blob([data.fileData]);
+        const blob = new Blob([data.fileData], { type: data.fileType });
         const url = window.URL.createObjectURL(blob);
-        document.getElementById('download-area').innerHTML = `
+        
+        const downloadArea = document.getElementById('download-area');
+        downloadArea.innerHTML = `
             <div class="download-card">
-                <span><i class="fas fa-file"></i> ${data.fileName}</span>
-                <a href="${url}" download="${data.fileName}" class="btn-primary" style="width: auto; padding: 8px 15px;">تحميل</a>
+                <span style="font-size: 13px; font-weight: bold;"><i class="fas fa-file-download"></i> ${data.fileName}</span>
+                <a href="${url}" download="${data.fileName}" class="btn" style="width: auto; padding: 8px 15px; background: #10b981;">تحميل</a>
             </div>
         `;
         document.getElementById('status').innerText = "وصلك ملف جديد!";
     });
 
-    socket.on('error-message', (msg) => alert(msg));
-
-    // دعم السحب والإفلات
-    const dropZone = document.getElementById('drop-zone');
-    dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
-    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
-    dropZone.addEventListener('drop', (e) => {
-        e.preventDefault();
-        dropZone.classList.remove('dragover');
-        document.getElementById('fileInput').files = e.dataTransfer.files;
-        updateFileLabel();
+    socket.on('error-message', (msg) => {
+        alert(msg);
+        document.getElementById('status').innerText = "";
     });
 </script>
 
